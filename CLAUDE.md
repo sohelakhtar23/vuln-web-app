@@ -13,19 +13,20 @@ The 8 vulnerabilities are **features, not bugs**. When asked to "fix" a vulnerab
 Package management uses `uv` with a project at the repo root (dependencies live in root `pyproject.toml`, not a `backend/` subdir — see "Specification Drift" below).
 
 ```powershell
-# Install / sync dependencies
+# Install / sync dependencies (root pyproject.toml)
 uv sync
 
-# Run the app (once backend code exists)
-uv run backend/app/main.py
-# or, from the backend/ directory:
-python app/main.py
+# Run the app — `sys.path` in main.py is patched so this works from any CWD:
+uv run backend/app/main.py          # from project root
+# or
+cd backend && python app/main.py    # from backend/
 
-# Server binds 0.0.0.0:3001 by default (PORT env var overrides)
+# Reset the DB: delete vulnerable_app.db at the project root; init_db() recreates it on next boot.
+# Server binds 0.0.0.0:3001 by default (PORT env var overrides).
 # App: http://localhost:3001
 ```
 
-There is currently no test suite, linter, or CI config. If tests are added, prefer `pytest` (per the planned `backend/pyproject.toml`).
+There is currently no test suite, linter, or CI config.
 
 ## Architecture (Big Picture)
 
@@ -62,20 +63,14 @@ This project follows a spec-driven workflow. The `docs/` directory contains (rea
 
 1. **`docs/PRD.md`** — product requirements, vulnerability catalog, user stories, NFRs
 2. **`docs/TDD.md`** — technical design, architecture diagrams, component responsibilities, data flow, exact vulnerability root-cause line numbers
-3. **`docs/prompts/1_gitignore_prompt` … `4_spec1_plan_execution_prompt`** — the staged prompt sequence that drove the spec → plan → execute pipeline
-4. **`.claude/specs/app-foundation.md`** (planned) — implementation addendum: runtime behavior, user flows, FR-01–06, visual design spec, validation rules, success/alternate paths, edge cases, acceptance criteria
-5. **`.claude/specs/app-foundation-plan.md`** (planned) — phase-by-phase implementation plan, no code
+3. **`.claude/specs/app-foundation.md`** — implementation addendum: runtime behavior, user flows, FR-01–06, visual design spec, validation rules, success/alternate paths, edge cases, acceptance criteria
+4. **`.claude/specs/app-foundation-plan.md`** — phase-by-step implementation plan, no code
 
 When making changes, treat PRD/TDD as the source of truth for *what* and *why*; treat the `.claude/specs/` files for *how* (the implementation addendum covers behaviors the PRD/TDD deliberately omit, like exact typography, runtime substitution mechanics, and edge case handling).
 
-## Specification Drift (real, not documented)
+## Specification Drift
 
-The committed PRD/TDD/specs describe a layout that has not been created on disk yet:
-
-- **Spec says**: `backend/pyproject.toml` (hatchling build, with `pytest` dev dep), `backend/uv.lock`, `requirements.txt` in `backend/`.
-- **Actual state**: a single root `pyproject.toml` (uv-managed, not hatchling), root `uv.lock`, no `requirements.txt`, no `backend/` directory, no source code at all yet.
-
-The `uv add` call that was run installed dependencies into the **root** project, not a `backend/` subproject. The next planning step (Phase 1 of the plan doc) needs to reconcile this — either move deps into a `backend/` subproject or update the specs to reflect the flat layout. Don't blindly create a second `pyproject.toml` without flagging the conflict to the user.
+The PRD/TDD describe a `backend/pyproject.toml` (hatchling, with `pytest` dev dep). The actual layout uses a single root `pyproject.toml` (uv-managed) — runtime deps (`fastapi`, `uvicorn`, `itsdangerous`, `python-multipart`) are declared there, and `uv.lock` lives at the repo root. The implementation plan explicitly **skipped** creating a second `pyproject.toml` to avoid conflict; do not retroactively add one. There is no `pytest` setup and no CI; the project is verified by manual checks listed in `.claude/specs/app-foundation-plan.md` Phase 10.
 
 ## Educational Disclaimer
 

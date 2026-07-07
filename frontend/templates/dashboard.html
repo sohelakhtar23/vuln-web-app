@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Vulnerable Web Lab</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="dashboard-body">
+    <header class="header">
+        <h1 class="header-title">Vulnerable Web Lab</h1>
+        <div class="header-logos">
+            <img class="header-logo" src="/static/images/PUCIT_Logo.png" alt="PUCIT">
+            <img class="header-logo" src="/static/images/blue-logo-scl2.png" alt="blue-logo">
+            <img class="header-logo" src="/static/images/excaliat-logo.png" alt="Excaliat">
+        </div>
+    </header>
+
+    <section class="hero-banner">
+        <div class="hero-left">
+            <h2 class="hero-title">Security Vulnerability Lab</h2>
+            <p class="hero-subtitle">Explore, exploit, and learn secure coding.</p>
+        </div>
+        <div class="hero-right">
+            <span class="hero-username">Logged in as <strong>{{username}}</strong></span>
+            <a href="/logout" class="btn btn-logout">Logout</a>
+        </div>
+    </section>
+
+    <main class="dashboard-content">
+        <article class="mission-card">
+            <h3 class="section-title">Our Mission</h3>
+            <p class="mission-description">
+                This lab is a deliberately vulnerable web application built
+                for security education. It contains 8 intentional flaws
+                covering the OWASP Top 10. Your job: find them, exploit them,
+                and document the root cause. Use the form fields in the
+                URL bar (for example, <code>/search?q=alice</code>) to test
+                each vulnerability against the running application.
+            </p>
+        </article>
+
+        <section class="vuln-section">
+            <h3 class="vuln-header">Vulnerabilities to Discover</h3>
+            <div class="vuln-grid">
+                <div class="vuln-card">
+                    <span class="tag tag-sqli">SQLi</span>
+                    <h4 class="card-title">SQL Injection</h4>
+                    <p class="card-description">Bypass authentication on the login endpoint by injecting SQL into the username field. Try <code>' OR '1'='1' --</code>.</p>
+                </div>
+                <div class="vuln-card">
+                    <span class="tag tag-xss">XSS</span>
+                    <h4 class="card-title">Stored XSS</h4>
+                    <p class="card-description">Register an account whose username contains a <code>&lt;script&gt;</code> tag. The script fires on every dashboard load.</p>
+                </div>
+                <div class="vuln-card">
+                    <span class="tag tag-xss">XSS</span>
+                    <h4 class="card-title">Reflected XSS</h4>
+                    <p class="card-description">Inject markup into the <code>q</code> parameter of <code>/search</code> and observe it execute in the response.</p>
+                </div>
+                <div class="vuln-card">
+                    <span class="tag tag-session">Session</span>
+                    <h4 class="card-title">Session Hijacking</h4>
+                    <p class="card-description">The session cookie is signed with a hardcoded weak secret. Copy the cookie from DevTools and replay it elsewhere.</p>
+                </div>
+                <div class="vuln-card">
+                    <span class="tag tag-brute">Brute</span>
+                    <h4 class="card-title">No Rate Limiting</h4>
+                    <p class="card-description">No request throttling on any endpoint. Run an automated brute force against <code>/login</code> with no interference.</p>
+                </div>
+                <div class="vuln-card">
+                    <span class="tag tag-crypto">Crypto</span>
+                    <h4 class="card-title">Weak Password Storage</h4>
+                    <p class="card-description">Passwords are hashed with unsalted MD5. Crack them with a rainbow table once the database is in your hands.</p>
+                </div>
+                <div class="vuln-card">
+                    <span class="tag tag-exposed">Exposed</span>
+                    <h4 class="card-title">Exposed Database</h4>
+                    <p class="card-description">Hit <code>/download/db</code> with no session and download the SQLite file directly. Every user is yours.</p>
+                </div>
+                <div class="vuln-card">
+                    <span class="tag tag-csrf">CSRF</span>
+                    <h4 class="card-title">Cross-Site Request Forgery</h4>
+                    <p class="card-description">No CSRF tokens on any form. A malicious page can submit the login or signup form on behalf of a logged-in user.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="steps-section">
+            <h3 class="vuln-header">How to Use This Lab</h3>
+            <div class="steps-container">
+                <div class="step-card">
+                    <span class="step-badge">1</span>
+                    <h4 class="step-title">Find</h4>
+                    <p class="step-description">Read the source under <code>backend/app/</code> and the routes in <code>auth.py</code> to identify weak points.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-badge">2</span>
+                    <h4 class="step-title">Exploit</h4>
+                    <p class="step-description">Craft an attack — a SQL payload, an XSS string, a replayed cookie — and verify the effect in your browser.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-badge">3</span>
+                    <h4 class="step-title">Mitigate</h4>
+                    <p class="step-description">For each flaw, describe the secure-coding fix: parameterized queries, output encoding, proper hashing, CSRF tokens, etc.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

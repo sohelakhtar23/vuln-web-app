@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Vulnerable Web Lab</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-title">Vulnerable Web Lab</h1>
+        <div class="header-logos">
+            <img class="header-logo" src="/static/images/PUCIT_Logo.png" alt="PUCIT">
+            <img class="header-logo" src="/static/images/blue-logo-scl2.png" alt="blue-logo">
+            <img class="header-logo" src="/static/images/excaliat-logo.png" alt="Excaliat">
+        </div>
+    </header>
+
+    <main class="auth-container">
+        <section class="auth-left">
+            <span class="circle circle-1"></span>
+            <span class="circle circle-2"></span>
+            <span class="circle circle-3"></span>
+            <div class="auth-left-content">
+                <span class="auth-badge">Security Lab</span>
+                <h2 class="welcome-heading">Create Your Account</h2>
+                <p class="auth-description">
+                    Sign up to start exploring. All credentials stay local to
+                    this educational sandbox.
+                </p>
+                <ul class="auth-features">
+                    <li>Set up a username and password</li>
+                    <li>Log in to access the dashboard</li>
+                    <li>Begin exploiting the 8 vulnerabilities</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="auth-right">
+            <div class="form-container">
+                <form action="/signup" method="POST">
+                    <h3 class="form-title">Create an account</h3>
+                    <p class="form-subtitle">It only takes a moment</p>
+
+                    <div class="form-group">
+                        <label class="form-label" for="username">Username</label>
+                        <input class="form-input" id="username" name="username" type="text" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email</label>
+                        <input class="form-input" id="email" name="email" type="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-input" id="password" name="password" type="password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="confirm_password">Confirm Password</label>
+                        <input class="form-input" id="confirm_password" name="confirm_password" type="password" required>
+                        <span id="mismatch" class="password-error" hidden>Passwords do not match</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+
+                    <p class="form-link">Already have an account? <a href="/login">Log in</a></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Client-side password-match check. If they differ, block submit
+        // and show inline red text below the confirm field.
+        document.querySelector("form").addEventListener("submit", (e) => {
+            const p = document.querySelector("[name=password]").value;
+            const c = document.querySelector("[name=confirm_password]").value;
+            if (p !== c) {
+                e.preventDefault();
+                document.getElementById("mismatch").hidden = false;
+            }
+        });
+    </script>
+</body>
+</html>
