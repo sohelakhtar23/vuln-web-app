@@ -1,0 +1,551 @@
+/* ============================
+   Global Reset & Base Styles
+   ============================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #1e293b;
+    line-height: 1.6;
+}
+
+a {
+    color: #1a237e;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ============================
+   Shared Header
+   ============================ */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 2px 10px rgba(26, 35, 126, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 1000;
+}
+
+.header-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a237e;
+}
+
+.header-logos {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-logo {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+}
+
+/* ============================
+   Auth Pages (Login / Signup)
+   ============================ */
+.auth-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+}
+
+/* Left Panel */
+.auth-left {
+    background: linear-gradient(135deg, #0d1b5e 0%, #1a237e 50%, #283593 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 48px 48px;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-left-content {
+    position: relative;
+    z-index: 2;
+    max-width: 480px;
+}
+
+/* Decorative circles */
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.circle-1 {
+    width: 300px;
+    height: 300px;
+    top: -60px;
+    right: -80px;
+}
+
+.circle-2 {
+    width: 200px;
+    height: 200px;
+    bottom: 80px;
+    left: -50px;
+}
+
+.circle-3 {
+    width: 150px;
+    height: 150px;
+    bottom: -30px;
+    right: 60px;
+}
+
+.auth-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c5cae9;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+}
+
+.welcome-heading {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.auth-description {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 24px;
+    line-height: 1.7;
+}
+
+.auth-features {
+    list-style: none;
+    padding: 0;
+}
+
+.auth-features li {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.auth-features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #c5cae9;
+    font-weight: 700;
+}
+
+/* Right Panel */
+.auth-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 70px 48px 48px;
+    background: #ffffff;
+}
+
+.form-container {
+    max-width: 400px;
+    width: 100%;
+}
+
+.form-title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.form-subtitle {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 28px;
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 6px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: #f8f9ff;
+    border: 1.5px solid #c5cae9;
+    border-radius: 8px;
+    color: #1e293b;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input::placeholder {
+    color: #64748b;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #3949ab;
+    box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.12);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s, background-color 0.2s;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn:hover {
+    text-decoration: none;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: #1a237e;
+    color: #ffffff;
+    margin-top: 8px;
+}
+
+.btn-primary:hover {
+    background: #283593;
+}
+
+/* Error Messages */
+.error-message {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+}
+
+.password-error {
+    color: #dc2626;
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+/* Form Links */
+.form-link {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-top: 20px;
+}
+
+.form-link a {
+    color: #1a237e;
+    font-weight: 600;
+}
+
+/* ============================
+   Dashboard
+   ============================ */
+.dashboard-body {
+    background: #eef1f8;
+}
+
+/* Hero Banner */
+.hero-banner {
+    background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+    padding: 100px 32px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.hero-left {
+    flex: 1;
+}
+
+.hero-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.hero-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.hero-username {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+}
+
+.hero-username strong {
+    color: #ffffff;
+}
+
+.btn-logout {
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 0.85rem;
+}
+
+.btn-logout:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Dashboard Content */
+.dashboard-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+
+/* Mission Card */
+.mission-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 32px;
+    border: 1px solid #e2e8f0;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+
+.mission-description {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.7;
+}
+
+/* Vulnerabilities Section */
+.vuln-section {
+    margin-bottom: 32px;
+}
+
+.vuln-header {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #64748b;
+    margin-bottom: 16px;
+}
+
+.vuln-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.vuln-card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    transition: box-shadow 0.2s;
+}
+
+.vuln-card:hover {
+    box-shadow: 0 4px 16px rgba(26, 35, 126, 0.10);
+}
+
+.card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 10px 0 6px;
+}
+
+.card-description {
+    font-size: 0.85rem;
+    color: #475569;
+    line-height: 1.5;
+}
+
+/* Vulnerability Tags */
+.tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.tag-sqli {
+    background: #fef9c3;
+    color: #854d0e;
+}
+
+.tag-xss {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.tag-session {
+    background: #f3e8ff;
+    color: #6b21a8;
+}
+
+.tag-brute {
+    background: #ffedd5;
+    color: #9a3412;
+}
+
+.tag-crypto {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.tag-exposed {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.tag-csrf {
+    background: #fce7f3;
+    color: #9d174d;
+}
+
+/* Process Steps */
+.steps-section {
+    margin-top: 8px;
+}
+
+.steps-container {
+    display: flex;
+    gap: 16px;
+}
+
+.step-card {
+    flex: 1;
+    background: #1a237e;
+    border-radius: 12px;
+    padding: 24px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.step-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.step-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.step-description {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+}
+
+/* ============================
+   Responsive Design
+   ============================ */
+@media (max-width: 768px) {
+    .auth-container {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-left {
+        padding: 90px 24px 40px;
+        min-height: auto;
+    }
+
+    .auth-right {
+        padding: 32px 24px;
+    }
+
+    .vuln-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .steps-container {
+        flex-direction: column;
+    }
+
+    .header-logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .hero-banner {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 90px;
+    }
+
+    .hero-right {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,34 @@
+import sys
+import os
+
+# Add backend/ directory to sys.path so 'app' package resolves correctly
+# regardless of which directory the script is launched from
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from starlette.middleware.sessions import SessionMiddleware
+
+from app.api.routes.auth import router
+from app.db.session import init_db
+
+app = FastAPI(title="Vulnerable Web Application - Security Lab")
+
+# VULNERABILITY #4: Session Hijacking -- hardcoded weak secret key
+SECRET_KEY = "super-secret-key-12345"
+app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
+
+app.include_router(router)
+
+# Mount static files
+BASE_DIR = os.path.join(os.path.dirname(__file__), "..", "..")
+app.mount("/static/css", StaticFiles(directory=os.path.join(BASE_DIR, "frontend", "static", "css")), name="css")
+app.mount("/static/images", StaticFiles(directory=os.path.join(BASE_DIR, "frontend", "static", "images")), name="images")
+
+# Initialize database on startup
+init_db()
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 3001))
+    uvicorn.run(app, host="0.0.0.0", port=port)
